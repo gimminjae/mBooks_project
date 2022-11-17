@@ -11,6 +11,7 @@
                 <th>계좌번호</th>
                 <th>출금요청금액</th>
                 <th></th>
+                <th>취소사유</th>
             </tr>
             </thead>
 
@@ -47,6 +48,7 @@
                     <a th:if="${withdraw.isWithdraw == true}" class="btn btn-disabled btn-outline btn-sm">입금 완료</a>
                     <a th:if="${withdraw.isCanceled == true}" class="btn btn-disabled btn-outline btn-sm">신청 취소</a>
                 </td>
+                <td>[[${withdraw.cancelReason}]]</td>
             </tr>
             </tbody>
         </table>
