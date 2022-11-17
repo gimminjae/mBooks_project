@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -45,21 +42,21 @@ public class AdminWithdrawController {
         return "redirect:/adm/withdraw/applyList?msg=%s".formatted(Ut.url.encode("처리되었습니다!"));
     }
     //출금 신청 취소
-    @GetMapping("/")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String withdrawCancel() {
-        return
-    }
+//    @GetMapping("/")
+//    @PreAuthorize("hasAuthority('ADMIN')")
+//    public String withdrawCancel() {
+//        return "/adm/withdraw/cancel_form";
+//    }
 
     //출금 신청 취소 처리
     @PostMapping("/cancel/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String cancelWithdraw(Principal principal, @PathVariable("id") long id) {
+    public String cancelWithdraw(Principal principal, @PathVariable("id") long id, @RequestParam("cancelReason") String cancelReason) {
         Withdraw withdraw = withdrawService.getById(id);
         boolean result = withdrawService.cancel(withdraw);
         if(result) {
             memberService.plusRestCash(withdraw.getPrice(), withdraw.getMember());
         }
-        return "redirect:/withdraw/list?msg=%s".formatted(Ut.url.encode("취소되었습니다."));
+        return "redirect:/adm/withdraw/applyList?msg=%s".formatted(Ut.url.encode("취소되었습니다."));
     }
 }

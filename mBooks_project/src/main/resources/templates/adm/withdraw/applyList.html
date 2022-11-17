@@ -23,10 +23,27 @@
                 <td>[[${withdraw.bankAccountNo}]]</td>
                 <td>[[${withdraw.price}]]</td>
                 <td>
-                    <form th:if="${withdraw.isWithdraw == false} and ${withdraw.isCanceled == false}" th:action="@{|/adm/withdraw/${withdraw.id}|}" method="post">
-                    <button class="btn btn-primary btn-outline btn-sm"
-                >입금 완료</button>
+                    <form th:if="${withdraw.isWithdraw == false} and ${withdraw.isCanceled == false}"
+                          th:action="@{|/adm/withdraw/${withdraw.id}|}" method="post">
+                        <button class="btn btn-primary btn-outline btn-sm"
+                        >입금 완료
+                        </button>
                     </form>
+                    <label class="label"  th:if="${withdraw.isWithdraw == false} and ${withdraw.isCanceled == false}">
+                        <input type="checkbox" id="my-modal-3" class="modal-toggle"/>
+                        <div class="modal">
+                            <div class="modal-box relative">
+                                <label for="my-modal-3"
+                                       class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                                <h3 class="mb-1">취소 사유를 입력하세요</h3>
+                                <form th:action="@{|/adm/withdraw/cancel/${withdraw.id}|}" method="post">
+                                    <input class="input input-bordered input-md w-full max-w-xs mr-2" type="text" id="cancelReason" name="cancelReason">
+                                    <button class="btn btn-outline btn-primary" type="submit">취소</button>
+                                </form>
+                            </div>
+                        </div>
+                        <a for="my-modal-3" class="btn btn-primary btn-outline btn-sm">취소</a>
+                    </label>
                     <a th:if="${withdraw.isWithdraw == true}" class="btn btn-disabled btn-outline btn-sm">입금 완료</a>
                     <a th:if="${withdraw.isCanceled == true}" class="btn btn-disabled btn-outline btn-sm">신청 취소</a>
                 </td>
