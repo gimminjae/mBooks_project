@@ -53,7 +53,7 @@ public class AdminWithdrawController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String cancelWithdraw(Principal principal, @PathVariable("id") long id, @RequestParam("cancelReason") String cancelReason) {
         Withdraw withdraw = withdrawService.getById(id);
-        boolean result = withdrawService.cancel(withdraw);
+        boolean result = withdrawService.cancel(withdraw, cancelReason);
         if(result) {
             memberService.plusRestCash(withdraw.getPrice(), withdraw.getMember());
         }

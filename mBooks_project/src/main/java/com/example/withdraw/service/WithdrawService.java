@@ -68,4 +68,15 @@ public class WithdrawService {
         withdrawRepository.save(withdraw);
         return true;
     }
+
+    @Transactional
+    public boolean cancel(Withdraw withdraw, String cancelReason) {
+        if(withdraw.isWithdraw() || withdraw.isCanceled()) {
+            return false;
+        }
+        withdraw.setCanceled(true);
+        withdraw.setCancelReason(cancelReason);
+        withdrawRepository.save(withdraw);
+        return true;
+    }
 }
