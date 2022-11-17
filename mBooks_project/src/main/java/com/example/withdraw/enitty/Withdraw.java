@@ -33,4 +33,6 @@ public class Withdraw {
     private boolean isWithdraw; //출금 처리 여부
 
     private boolean isCanceled; //취소 여부
+
+    private String cancelReason; //취소 사유 - 관리자만
 }
